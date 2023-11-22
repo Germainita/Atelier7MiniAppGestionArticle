@@ -10,7 +10,7 @@ export class ServiceUtilisateur{
 
     // méthode de recupération des articles
     getUtilisateur(){
-        this.httpClient.get("http://jsonplaceholder.typicode.com/users")
+        return this.httpClient.get("http://jsonplaceholder.typicode.com/users")
     }
 
 }
