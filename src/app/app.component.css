@@ -1,0 +1,11 @@
+/* #E59159 */
+/* #71211E */
+.card{
+    border: none;
+    border-left: 1px solid #71211E;
+}
+
+.btn{
+    background-color: #E59159;
+    color: white;
+}

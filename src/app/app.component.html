@@ -1,0 +1,58 @@
+<div class="container">
+  <h1 class="text-center mt-4">Liste des utilisateurs</h1>
+  <div class="container-list py-4">
+    <div class="row">
+      <div class="col-md-4 col-lg-3 mb-4" *ngFor="let user of users">
+        <div class="card shadow">
+          <div class="card-body">
+            <h5 class="card-title">{{user.name}} {{user.username}}</h5>
+            <p class="card-text">Email: {{user.email}}</p>
+            <p class="card-text">Phone: {{user.phone}}</p>
+            <p class="card-text">Web: {{user.website}}</p>
+            <a class="btn btn-adresse d-block mb-3" data-bs-toggle="modal" data-bs-target="#detailAdresse" (click)="showAddress(user.address)">Address </a>
+            <a class="btn btn-company d-block"data-bs-toggle="modal" data-bs-target="#detailCompany" (click)="showCompany(user.company)" >Company</a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  
+  </div>
+</div>
+
+
+<!-- Detail adresse -->
+<div class="modal fade" id="detailAdresse" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Adresse infos</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>City: {{objectAdresse.city}}</p>
+        <p>Street: {{objectAdresse.street}}</p>
+        <p>Suite: {{objectAdresse.suite}}</p>
+        <p>Zipcode: {{objectAdresse.zipcode}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Company -->
+<div class="modal fade" id="detailCompany" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Company infos</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Company name: {{objectCompany.name}}</p>
+        <p>Company bs: {{objectCompany.bs}}</p>
+        <p>Company catchPhrase: {{objectCompany.catchPhrase}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
