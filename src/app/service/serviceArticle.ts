@@ -11,6 +11,6 @@ export class ServiceArticle {
 
     // Methode pour récupérer les articles 
     getArticle(){
-        this.httpClient.get("https://jsonplaceholder.typicode.com/posts");
+        return this.httpClient.get("https://jsonplaceholder.typicode.com/posts");
     }
 }
