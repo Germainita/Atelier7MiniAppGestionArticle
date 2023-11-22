@@ -14,7 +14,7 @@ export class serviceCommentaire{
 
     getCommentaire(){
 
-        this.httpClient.get("https://jsonplaceholder.typicode.com/comments")
+       return this.httpClient.get("https://jsonplaceholder.typicode.com/comments")
 
     }
 
