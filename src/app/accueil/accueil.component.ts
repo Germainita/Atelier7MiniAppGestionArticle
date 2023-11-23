@@ -37,7 +37,7 @@ export class AccueilComponent implements OnInit {
     // On stocke le tableau des commentaires dans le localStorage
     if(!localStorage.getItem("commentaires")){
       localStorage.setItem("commentaires", JSON.stringify(this.commentaires));
-    }
+    } 
 
     // On récupere les articles 
     this.artcileService.getArticle().subscribe(data => {
