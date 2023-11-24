@@ -12,5 +12,6 @@ export class ServiceUtilisateur{
     getUtilisateur(){
         return this.httpClient.get("http://jsonplaceholder.typicode.com/users")
     }
+    
 
 }

@@ -1,2 +1,50 @@
-<p>gestion-article works!</p>
+<div class="container">
+    <button  class="btn btn-primary my-5 id="exampleModal  data-bs-toggle="modal" data-bs-target="#exampleModal ">Ajouter un article</button>
+    <h1 class="text-center mt-4">Liste des articles de {{userConnect.name}}</h1>
+    <div class="container-list py-4">
+      <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let article of tabArticlesUser">
+          <div class="card shadow py-3">
+            <div class="card-body">
+              <h5 class="card-title text-center">Titre: {{article.title}}</h5>
+              <p class="card-text">Description: {{article.body}}</p>
+              <div class="d-flex">
+                  <button  class="btn btn-primary me-3">Modifier</button>
+                  <button  class="btn btn-secondary me-3">Archiver</button>
+                  <button  class="btn btn-danger me-3">Supprimer</button>
+                  <button  class="btn btn-success me-3">Detail</button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    <!-- Button trigger modal -->
 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajout article</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div >    
+          <form (ngSubmit)="ajouterArticle()">
+                <div class="mb-3">
+                  <label for="titre">Titre :</label>
+                  <input type="text" id="titre" name="titre"  class="form-control" required />
+                </div>
+                <div class="mb-3">
+                  <label for="contenu">
+                    Description:</label>
+                  <textarea id="contenu" name="contenu"  class="form-control" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Ajouter</button>
+                <button type="button" class="btn btn-secondary" (click)="fermerAjoutModal()">Fermer</button>
+              </form>
+            </div>
+    </div>
+  </div>
+    </div>
+</div>

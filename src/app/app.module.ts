@@ -9,6 +9,8 @@ import { GestionArticleComponent } from './gestion-article/gestion-article.compo
 import { InscriptionComponent } from './inscription/inscription.component';
 import { ConnexionComponent } from './connexion/connexion.component'
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -16,13 +18,18 @@ import { FormsModule } from '@angular/forms';
     AccueilComponent,
     GestionArticleComponent,
     InscriptionComponent,
-    ConnexionComponent
+    ConnexionComponent,
+    HttpClient,
+
+    
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
