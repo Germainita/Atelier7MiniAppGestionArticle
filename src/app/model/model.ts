@@ -5,15 +5,15 @@ import { Company } from "./company";
 
 // Model pour article 
 export interface IArticle {
-    idUser?: number;
+    userId?: number;
     id?: number;
     title?: string;
     body?: string;
   }
 
   export class Article implements IArticle {
-    constructor(public idUser?: number, public id?: number,  public title?: string,public body?: string) {
-      this.idUser = idUser;
+    constructor(public userId?: number, public id?: number,  public title?: string,public body?: string) {
+      this.userId = userId;
       this.id = id;
       this.title = title;
       this.body = body;

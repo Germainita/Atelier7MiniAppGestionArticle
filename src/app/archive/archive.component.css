@@ -1,0 +1,143 @@
+/* Debut navbar  */
+/* Couleur de base  */
+/* Vert: #1D3124 */
+/* Couleur clair #E59560 */
+/* Couleur plus clair: #F6F4E8 */
+
+/* #E59159 */
+/* #71211E */
+
+.navbar{
+    background-color: #f6F6F6;
+}
+
+.nav-link{
+    color: #596235 !important;
+    font-weight: bold;
+}
+.nav-link:hover{
+    background-color: #D96845;
+    border-radius: 2vh;
+    color: white !important;
+}
+
+.btn-deconnexion{
+    background-color: #596235;
+    border-radius: 2vh;
+    color: #DB6745 !important;
+    font-weight: bold;
+    border: none;
+}
+
+.active {
+    color: #E59560 !important;
+}
+
+.btn-item {
+    color: #596235;
+    font-size: 4vh;
+}
+.btn-item:hover {
+    background-color: #D96845;
+    color: white;
+}
+
+.btn-item-active{
+    color: white;
+    /* border: 1px solid #D96845; */
+    background-color: #D96845;
+}
+
+.btn-profil{
+    background-color: #DB6745;
+    border-radius: 2vh;
+    color: #DB6745 !important;
+    border: none;
+}
+/* Fin navbar  */
+
+/* Container  */
+.container-list .card{
+    min-height: 60vh;
+    border: none;
+}
+
+
+
+.searchclasse{
+    background-color: #596235;
+    color: white;
+}
+
+.profil{
+    width: 5vh;
+    height: 5vh;
+    border-radius: 100%;
+}
+
+.profil-image img{
+    width: 25vh;
+    height: 25vh;
+    
+}
+
+/* Pour les commentaires  */
+.liste-commentaire .profil{
+    width: 20vh;
+    height: 20vh;
+}
+
+/* .contact-list{
+    border-radius: 5vh;
+} */
+
+/* Les cercles sur la carte  */
+.circle-start{
+    width: 20%;
+    height: 20vh;
+    border-radius: 5vh 0 100% 0 ;
+}
+
+.btn-valider{
+    background-color: #596235;
+    color: white;
+}
+.btn-valider:hover{
+    background-color: #D96845;
+    color: white;
+}
+
+/* .btn-action{
+    background-color: whitesmoke;
+    font-weight: bold;
+    border: none;
+    padding:1.5vh 2vh;
+} */
+
+/* .btn-desarchiver{
+    background-color: #D96845;
+    color: white;
+} */
+.btn-supprimer{
+    font-weight: bold;
+    border: none;
+    background-color: whitesmoke;
+    box-shadow: 2px 2px #D96845;
+    color: #596235;
+}
+.btn-supprimer:hover{
+    color: white;
+    background-color: #D96845;
+}
+
+.btn-desarchiver{
+    font-weight: bold;
+    border: none;
+    background-color: whitesmoke;
+    box-shadow: 2px 2px #596235;
+    color: #D96845;
+}
+.btn-desarchiver:hover{
+    color: white;
+    background-color: #596235;
+}

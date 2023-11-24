@@ -9,6 +9,8 @@ import { GestionArticleComponent } from './gestion-article/gestion-article.compo
 import { InscriptionComponent } from './inscription/inscription.component';
 import { ConnexionComponent } from './connexion/connexion.component'
 import { FormsModule } from '@angular/forms';
+import { ArchiveComponent } from './archive/archive.component';
+import { CorbeilleComponent } from './corbeille/corbeille.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { FormsModule } from '@angular/forms';
     AccueilComponent,
     GestionArticleComponent,
     InscriptionComponent,
-    ConnexionComponent
+    ConnexionComponent,
+    ArchiveComponent,
+    CorbeilleComponent
   ],
   imports: [
     BrowserModule,

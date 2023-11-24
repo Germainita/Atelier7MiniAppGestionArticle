@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Article } from '../model/model';
+import { Article, Commentaire } from '../model/model';
 import { ServiceArticle } from '../service/serviceArticle';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-gestion-article',
@@ -14,15 +15,34 @@ export class GestionArticleComponent implements OnInit {
   userConnect: any;
   tabArticles: any;
   tabCommentaies: any;
+  articlesArchive=[];
+  articlesSupprime=[];
+
+  titre = "";
+  description = "";
+
+
 
   // Tableau des article de l'utisateur connecté 
   tabArticlesUser: any;
 
+  // Tableau des articles archivés
+  tabArticlesArchives:any[] = [];
+
+  // Tableau des articles supprimés
+  tabArticlesSupprimes:any[] = [];
+
   // Déclaration d'un objet article 
   objectArticle = new Article;
 
+  // Déclaration d'un objet commentaire 
+  tabCommentsArticles: Commentaire[] = []
+  // objectCommenatire [] = new Commentaire [];
+
   // L'article trouvé: 
   articleFound: any;
+
+  chooseDetail: boolean = true;
 
   // Définition du constructeur 
   constructor (private route: ActivatedRoute, private articleService: ServiceArticle){}
@@ -30,7 +50,8 @@ export class GestionArticleComponent implements OnInit {
   idUserConnect = this.route.snapshot.params['id'];
 
 
-  ngOnInit(): void {
+
+  ngOnInit() {
     // On récuere les donnees du localStorage
     // les utilisateurs
     this.tabUtilisateurs = JSON.parse(localStorage.getItem("utilisateurs") || "[]");
@@ -40,89 +61,274 @@ export class GestionArticleComponent implements OnInit {
     this.tabCommentaies = JSON.parse(localStorage.getItem("commentaires") || "[]");
     // On trouve l'utilisateur qui s'est connecté 
     this.userConnect = this.tabUtilisateurs.find((element:any) => element.id == this.idUserConnect);
+    
+    // On stocke le tableau des articles archivés dans le localstorage 
+    if(!localStorage.getItem("articlesArchives")){
+      localStorage.setItem("articlesArchives", JSON.stringify(this.articlesArchive));
+    }
+    this.tabArticlesArchives = JSON.parse(localStorage.getItem("articlesArchives") || "[]")
+    
+    // On stocke le tableau des articles supprimés dans le localstorage 
+    if(!localStorage.getItem("articlesSupprimes")){
+      localStorage.setItem("articlesSupprimes", JSON.stringify(this.articlesArchive));
+    }
+    this.tabArticlesSupprimes = JSON.parse(localStorage.getItem("articlesSupprimes") || "[]")
 
+    // Les articles de l'utilisateur connecté 
+    this.articlesUserFunction();
+  }
+
+  // Methode pour récupérer les articles de l'utilisateur connecté 
+  articlesUserFunction(){
     // On récupère les article de l'utisateur connecté
     this.tabArticlesUser = this.tabArticles.filter((element?:any)=>element?.userId == this.idUserConnect);
-    // console.log("Les articles de l'utilisateurs connecté");
     // console.log(this.tabArticlesUser);
+  }
+  // Méthode pour afficher un sweetalert2 apres vérification
+  messageAlert(title:any, text:any, icon:any) {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon
+    });
 
   }
 
+  viderArticle(){
+    this.titre = "";
+    this.description = "";
+  }
+  
+  // Methode pour ajouter un article 
+  ajouter(){
+    // On récupère l'identifiant du dernier element du tableau article
+    let lastIdArticle = this.tabArticles[this.tabArticles.length - 1].id;
+
+    // On crée l'objet à ajouter 
+    let article = {
+      userId: this.idUserConnect,
+      title: this.titre,
+      body: this.description
+    }
+    
+    if (!this.titre){
+      // Si le titre n'est pas renseigné, on n'ajoute pas 
+      this.messageAlert("Ajout impossible!", "Le titre est obligatoire", "error")
+    }else{
+      // On cherche dans le tableau si l'utilisateur n'a pas déja un article avec le meme titre 
+      let articleExist = this.tabArticlesUser.find((article:any)=> article.title.toLowerCase() == this.titre.toLowerCase());
+      if(articleExist){
+        this.messageAlert("Ajout impossible!", "L'article existe déjà", "error");
+      }
+      else{
+        this.articleService.addArticle(article).subscribe(valeur =>{
+          // l'objet valeur renvoyé à toujours le meme identifiant
+          this.objectArticle = valeur
+          
+          // On change l'identifiant de l'element à ajouter 
+          this.objectArticle.id = lastIdArticle + 1;
+          
+          // On ajoute l'objet dans le tableau des articles 
+          this.tabArticles.push(this.objectArticle);
+    
+          // On met à jour le tableau qui est stocké dans le localStorage 
+          localStorage.setItem("articles", JSON.stringify(this.tabArticles))
+          this.messageAlert("Felicitation!", "Article ajouter avec success", "success");
+          
+          // On vide les champs de l'objetarticle
+          this.viderArticle();
+    
+          // On met à jour le tableau des articles de l'utilisateur
+          this.articlesUserFunction();
+        });
+      }
+    }
+    
+  }
   // Methode pour modifier un article 
   // Charger les informations de l'article 
   // On récupère l'article cliqué avec la méthode getArticleById de notre service 
   chargerInfosArticle(article:any){
-    // console.log(article);
     this.articleFound = article;
     this.objectArticle.id = article.id;
-    this.objectArticle.idUser = article.userId;
+    this.objectArticle.userId = article.userId;
     this.objectArticle.title = article.title;
     this.objectArticle.body = article.body;
   }
+  // Methode pour modifier l'article en question 
   modfier(){
-    // Mis à jour d'un article 
-    // On fait appel à la méthode updateArticle de notre service article 
-    this.articleService.updateArticle(this.objectArticle, this.articleFound.id).subscribe(data =>{
-      // console.log(data);
-      // On met à jour l'objet trouvé pour lui donnner les nouvelles valeurs 
-      this.articleFound = data;
-      // Swal.fire({
-      //   title: "Etes-vous sur???",
-      //   text: "Vous allez mofier ce contact",
-      //   icon: "warning",
-      //   showCancelButton: true,
-      //   confirmButtonColor: "#BE3144",
-      //   cancelButtonColor: "#F05941",
-      //   confirmButtonText: "Oui, je modifie!"
-      // }).then((result) => {
-      //   if (result.isConfirmed) {
-      //     this.profFound.nom = this.nom;
-      //     this.profFound.prenom = this.prenom;
-      //     this.profFound.email = this.email;
-      //     this.profFound.adresse = this.adresse;
-      //     this.profFound.telephone = this.telephone;
-      //     this.profFound.image = this.imageUrl;
-      //     this.profFound.updateAt = new Date();
-      //     this.profFound.updateBy = this.adminConnect.email;
-      //     // On met à jour le tableau qui est stocké dans le localStorage 
-      //     localStorage.setItem("professeurs", JSON.stringify(this.tabProfs))
-      //     this.verifierChamps("Compte modifié!", "", "success");     
-      //   }
-      // });
-      // On recherche l'objet dans le tableau des articles de l'utilisateurs puis on le met à jpur 
-      for(let i=0; i< this.tabArticlesUser.length; i++){
-        if (this.tabArticlesUser[i].id == this.articleFound.id){
-          // console.log("trouvé");
-          this.tabArticlesUser[i].title = this.articleFound.title;
-          this.tabArticlesUser[i].body = this.articleFound.body;
-          console.log(this.tabArticlesUser[i]);
-          console.log(this.tabArticles);
-          break;
-          // On met à jour le localStorage
+    // Mis à jour d'un article
+    if(!this.objectArticle.title){
+      this.messageAlert("Impossible!", "Titre obligatoire", "error"); 
+    }
+    else{
+      // On s'assure que le titre ne soit pas vide
+      // On fait appel à la méthode updateArticle de notre service article 
+      this.articleService.updateArticle(this.objectArticle, this.articleFound.id)
+      .subscribe(
+        valeur =>{
+          console.log(valeur);
+          // On met à jour l'objet trouvé pour lui donnner les nouvelles valeurs 
+          this.articleFound = valeur;
+          // On demande une confirmation de modification 
+          Swal.fire({
+            title: "Etes-vous sur???",
+            text: "Vous allez mofier cet article",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonText: "Annuler",
+            confirmButtonColor: "#596235",
+            cancelButtonColor: "#D96845",
+            confirmButtonText: "Oui, je modifie!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // On recherche l'objet dans le tableau des articles de l'utilisateurs puis on le met à jpur 
+              for(let i=0; i< this.tabArticlesUser.length; i++){
+                if (this.tabArticlesUser[i].id == this.articleFound.id){
+                  // console.log("trouvé");
+                  this.tabArticlesUser[i].title = this.articleFound.title;
+                  this.tabArticlesUser[i].body = this.articleFound.body;
+                  console.log(this.tabArticlesUser[i]);
+                  console.log(this.tabArticles);
+                  break;
+                  // On met à jour le localStorage
+                }
+              }
+              // On met à jour le tableau qui est stocké dans le localStorage 
+              localStorage.setItem("articles", JSON.stringify(this.tabArticles))
+              this.messageAlert("Article modifié!", "", "success");     
+            }
+          });
+        },
+        // Si on n'accede pas à l'APi, une reponse d'érreur est envoyé 
+        reponse =>{
+          // console.log(reponse.status)
+          if(reponse.status== 500){
+            // On ne peut pas récupérer l'article avec l'api
+            // On modifie directement avec localStorage
+            Swal.fire({
+              title: "Etes-vous sur???",
+              text: "Vous allez mofier cet article",
+              icon: "warning",
+              showCancelButton: true,
+              cancelButtonText: "Annuler",
+              confirmButtonColor: "#596235",
+              cancelButtonColor: "#D96845",
+              confirmButtonText: "Oui, je modifie!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // On recherche l'objet dans le tableau des articles de l'utilisateurs puis on le met à jpur 
+                // console.log(this.articleFound);
+                // console.log(this.objectArticle.title);
+                // console.log(this.objectArticle.body);
+                this.articleFound.title = this.objectArticle.title;
+                this.articleFound.body = this.objectArticle.body;
+
+                // On met à jour le tableau qui est stocké dans le localStorage 
+                localStorage.setItem("articles", JSON.stringify(this.tabArticles))
+                this.messageAlert("Article modifié!", "", "success");     
+              }
+            });
+
+          }
+          console.log("On ne peut pas récupérer l'article avec l'api")
+          
+          console.log("Post call in error", reponse);
+         
+        },
+        () =>{
+          console.log("The post observable is now completed")
         }
-      }
-
-      // On parcourt le tableau pour lui donner l'objet modifier 
-      
-      // console.log(this.tabArticlesUser);
-    })
-    console.log(this.articleFound)
-    // console.log(article);
-    // alert(this.objectArticle.title);
-    // this.articleFound.title = this.objectArticle.title;
-    // this.articleFound.body = this.objectArticle.body;
-    // console.log(this.articleFound);
-    // console.log(this.tabArticlesUser);
-    // console.log(this.tabArticles);
+      )      
+    } 
+    
   }
 
-  // Methode pour mettre à jour un article 
-  public updatePost(postData: Object) {
-    let endPoints = "/posts/1"
-    // this.httpClient.put(this.url + endPoints, postData).subscribe(data => {
-      // console.log(data);
-    // });
+  // Détails d'un article
+  details(article:any){
+    this.objectArticle = article;
+    // On recherche les commentaires de l'article en question dans le tableau des commentaires
+    this.tabCommentsArticles = this.tabCommentaies.filter((element?:any)=>element?.postId == article.id);
+    console.log(this.tabCommentsArticles)
   }
 
+  showDetail(){
+    this.chooseDetail = !this.chooseDetail;
+  }
+  // Archiver un article 
+  archiver(article:any){    
+    // On trouve l'indexe par rapport à l'identifiant
+    let index = this.tabArticles.findIndex((element:any)=>element.id == article.id);
+
+    if(index !== -1){
+      // Alert de confirmation 
+      Swal.fire({
+        title: "Etes-vous sur???",
+        text: "Vous allez archiver cet article",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Annuler",
+        confirmButtonColor: "#596235",
+        cancelButtonColor: "#D96845",
+        confirmButtonText: "Oui, j'archive!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.tabArticlesArchives.push(article);
+          console.log(this.tabArticlesArchives);
+          this.tabArticles.splice(index,1)
+          this.tabArticlesUser.splice(index,1)
+          console.log(this.tabArticles);
+          console.log(this.tabArticlesUser);
+          // On met à jour le tableau des articles dans le localStorage 
+          localStorage.setItem("articles", JSON.stringify(this.tabArticles))
+          this.messageAlert("Article archivé!", "", "success");     
+          // On met à jour le localStorage pour les articles archivés
+          localStorage.setItem("articlesArchives", JSON.stringify(this.tabArticlesArchives));
+
+          // On met à jour le tableau des articles de l'utilisateur
+          this.articlesUserFunction();
+        }
+      })
+
+    }
+  }
+
+  // Archiver un article 
+  supprimer(article:any){    
+    // On trouve l'indexe par rapport à l'identifiant
+    let index = this.tabArticles.findIndex((element:any)=>element.id == article.id);
+
+    if(index !== -1){
+      // Alert de confirmation 
+      Swal.fire({
+        title: "Etes-vous sur???",
+        text: "Vous allez supprimer définitivement cet article",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Annuler",
+        confirmButtonColor: "#596235",
+        cancelButtonColor: "#D96845",
+        confirmButtonText: "Oui, je supprime!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.tabArticlesSupprimes.push(article);
+          console.log(this.tabArticlesSupprimes);
+          this.tabArticles.splice(index,1)
+          this.tabArticlesUser.splice(index,1)
+          console.log(this.tabArticles);
+          console.log(this.tabArticlesUser);
+          // On met à jour le tableau des articles dans le localStorage 
+          localStorage.setItem("articles", JSON.stringify(this.tabArticles))
+          this.messageAlert("Article supprimé!", "", "success");     
+          // On met à jour le localStorage pour les articles archivés
+          localStorage.setItem("articlesSupprimes", JSON.stringify(this.tabArticlesSupprimes));
+
+          // On met à jour le tableau des articles de l'utilisateur
+          this.articlesUserFunction();
+        }
+      })
+
+    }
+  }
   
 }

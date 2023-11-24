@@ -1,0 +1,34 @@
+/* couleur de base : 
+#BE3144
+#D96845 */
+.connexion{
+    margin: 10vh auto;
+    max-width: 70vh;
+}
+
+.btn-connexion{
+    background-color: white!important;
+    box-shadow: 4px 4px 2px #D96845 ;
+    
+    color:  #D96845;
+}
+
+.stylisation{
+    height: 15vh;
+    width: 100%;
+    position: relative;
+    margin-bottom: -2.5vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-sizing: border-box;
+}
+
+.style-droite{
+    background-color: #596235;
+    border-radius: 0vh 150vh 0 0vh;
+}
+
+.style-gauche{
+    background-color: #596235;
+    border-radius: 150vh 0 0vh 0vh;
+}

@@ -18,7 +18,7 @@
 .nav-link:hover{
     background-color: #D96845;
     border-radius: 2vh;
-    color: white!important;
+    color: white !important;
 }
 
 .btn-deconnexion{
@@ -38,10 +38,15 @@
     color: #596235;
     font-size: 4vh;
 }
-
 .btn-item:hover {
     background-color: #D96845;
     color: white;
+}
+
+.btn-item-active{
+    color: white;
+    /* border: 1px solid #D96845; */
+    background-color: #D96845;
 }
 
 .btn-profil{
@@ -54,52 +59,14 @@
 
 /* Container  */
 .container-list .card{
-    min-height: 50vh;
+    min-height: 60vh;
     border: none;
 }
 
-.btn-action{
-    /* border-radius: 2vh; */
-    background-color: whitesmoke;
-    /* color: white; */
-    font-weight: bold;
-    border: none;
-    padding:1.5vh 2vh;
-}
 
-.btn-action-active{
-    box-shadow: 2px 2px #D96845;
-    color: #596235;
-}
-.btn-action-active:hover{
-    /* box-shadow: 2px 2px #D96845; */
-    color: white;
-    background-color: #D96845;
-}
-
-.btn-action-notactive{
-    box-shadow: 2px 2px #596235;
-    color: #D96845;
-}
-
-.btn-action-notactive:hover{
-    color: white;
-    background-color: #596235;
-}
-
-
-.btn-ajout-article{
-    font-weight: bold;
-    color: white;
-    background-color: #596235;
-}
-.btn-ajout-article:hover{
-    background-color: #D96845;
-    scale: 1.2;
-}
 
 .searchclasse{
-    background-color: #D96845;
+    background-color: #596235;
     color: white;
 }
 
@@ -132,47 +99,13 @@
     border-radius: 5vh 0 100% 0 ;
 }
 
-.circle-active{
-    background-color: #D96845;
-}
 
-.circle-end{
-    display: flex;
-    justify-content: space-between;
-}
-
-.end {
-    width: 15%;
-    height: 15vh;
-    height: 15vh;
-    border-radius: 100% 0 5vh 0;
-    position: relative;
-    margin-bottom: -0.2vh;
-}
-
-.circle-deseable{
-    background-color: #596235;
-}
-
-.liste-commentaire .card{
-    border-radius: 5vh;
-    border: 1px solid #596235;
-}
-
-.commentaire-item{
-    margin: -20vh 0 -15vh 0;
-    padding: 0 15% 0 22%;
-}
 
 .btn-valider{
     background-color: #596235;
     color: white;
 }
-.btn-annuler{
+.btn-valider:hover{
     background-color: #D96845;
     color: white;
-}
-
-.details-article .bi{
-    color: #596235;
 }

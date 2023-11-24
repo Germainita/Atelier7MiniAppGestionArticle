@@ -1,0 +1,43 @@
+/* Couleur de base  */
+/* Vert: #1D3124 */
+/* Couleur clair #E59560 */
+/* Couleur plus clair: #F6F4E8 */
+
+/* #E59159 */
+/* #71211E */
+
+.navbar{
+    background-color: #f6F6F6;
+}
+
+.nav-link{
+    color: #596235 !important;
+    font-weight: bold;
+}
+.nav-link:hover{
+    background-color: #D96845;
+    border-radius: 2vh;
+    color: white!important;
+}
+
+.btn-connexion{
+    background-color: #596235;
+    border-radius: 2vh;
+    color: #DB6745 !important;
+    font-weight: bold;
+    border: none;
+}
+
+.active, .titre-article {
+    color: #E59560 !important;
+}
+
+.container-list .card{
+    min-height: 67vh;
+    border: none;
+}
+
+.searchclasse{
+    background-color: #D96845;
+    color: white;
+}

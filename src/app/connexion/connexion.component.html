@@ -1,13 +1,28 @@
-<div class="container container-inscription">
-    <form>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="email">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" name="password" class="form-control" id="exampleInputPassword1" [(ngModel)]="password">
-        </div>
-        <button type="submit" class="btn btn-primary" (click)="connexion()">Se connecter</button>
-    </form>
+<div class="connexion mt-5">
+  <div class=" shadow py-3">
+      <h1 class="text-center fw-bold mb-5">Connectez-vous</h1>
+      <form action="" class="container mb-3 px-5">
+          <div class="mb-3">
+              <label for="emailInput" class="form-label">Adresse email:</label>
+              <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)] = "emailCon" (input)="verifEmailConFonction()">
+              <p class="text-danger" *ngIf="!exactEmailCon">{{verifEmailCon}}</p>
+              <p class="text-success" *ngIf="exactEmailCon"><i class="bi bi-check2-all"></i> Exact !</p>
+          </div>
+          <div class="mb-3">
+              <label for="passwordInput" class="form-label">Mot de passe : </label>
+              <input type="password" name="password" class="form-control" id="passwordInput" [(ngModel)] = "passwordCon" (input)="verifPasswordConFonction()">
+              <p class="text-danger" *ngIf="!exactPasswordCon">{{verifPasswordCon}}</p>
+              <p class="text-success" *ngIf="exactPasswordCon"><i class="bi bi-check2-all"></i> Exact !</p>
+          </div>
+          <div class="btn-auth text-center">
+              <button type="submit" class="btn btn-connexion me-3" (click)="connexion()">Se connecter</button>
+
+          </div>
+      </form>
+
+      <div class="stylisation">
+          <div class="style-droite grid-item"></div>
+          <div class="style-gauche grid-item"></div>
+      </div>
+  </div>
 </div>

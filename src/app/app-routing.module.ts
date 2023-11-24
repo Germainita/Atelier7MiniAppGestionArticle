@@ -4,6 +4,8 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { GestionArticleComponent } from './gestion-article/gestion-article.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { InscriptionComponent } from './inscription/inscription.component';
+import { CorbeilleComponent } from './corbeille/corbeille.component';
+import { ArchiveComponent } from './archive/archive.component';
 
 const routes: Routes = [
   // Route par défaut 
@@ -17,10 +19,15 @@ const routes: Routes = [
 
   // Route vers accueil 
   {path: "accueil", component: AccueilComponent},
-
+  
   // Route vers gestion article 
   {path: "gestionArticle/:id", component: GestionArticleComponent},
+  
+  // Route vers corbeille 
+  {path: "corbeille/:id", component: CorbeilleComponent},
 
+  // Route vers archive 
+  {path: "archive/:id", component: ArchiveComponent},
 
 ];
 

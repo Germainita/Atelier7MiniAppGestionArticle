@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Navbar</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,33 +7,39 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" >Accueil</a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li> -->
         </ul>
         <div class="d-flex">
-          <a routerLink="/inscription" class="btn btn-primary me-3">S'inscrire</a>
-          <a routerLink="/connexion" class="btn btn-secondary me-3">Se connecter</a>
+          <!-- <a routerLink="/inscription" class="btn btn-primary me-3">S'inscrire</a> -->
+          <a routerLink="/connexion" class="btn btn-connexion btn-secondary me-3">Se connecter</a>
         </div>
       </div>
     </div>
 </nav>
 
-<div class="container">
-  <h1 class="text-center mt-4">Liste des articles</h1>
+<div class="container mt-5">
+  <div class="d-flex justify-content-between mb-5">
+    <div class="col-md-6">
+      <h3>Liste des articles</h3>
+    </div>
+    <div class="col-md-6">
+      <div class="input-group">
+        <input type="text" name="search" class="form-control">
+        <button class="searchclasse input-group-text"><i class="bi bi-search"></i></button>
+      </div>
+    </div>  
+  </div>
   <div class="container-list py-4">
     <div class="row">
-      <div class="col-md-4 col-lg-3 mb-4" *ngFor="let article of tabArticles">
+      <div class="col-md-4 col-lg-3 mb-4" *ngFor="let article of articles">
         <div class="card shadow">
           <div class="card-body">
-            <h5 class="card-title">Article: {{article.id}} </h5>
-            <p class="card-text">Titre: {{article.title}}</p>
-            <p class="card-text">Description: {{article.body}}</p>
+            <img src="https://img.freepik.com/free-photo/interior-decoration-inspired-by-mexican-folklore_23-2150711321.jpg?size=626&ext=jpg&ga=GA1.1.59389668.1692912989&semt=ais" class="img-fluid rounded mb-3" alt="...">
+            <h4 class="card-title fw-bold titre-article">Article: {{article.id}} </h4>
+            <h5 class="card-title">{{article.title}} </h5>
+            <!-- <p class="card-text">Titre: {{article.title}}</p> -->
+            <p class="card-text">{{article.body}}</p>
           </div>
         </div>
         

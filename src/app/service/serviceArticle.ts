@@ -22,13 +22,19 @@ export class ServiceArticle {
         return this.httpClient.get(`${this.url}/posts/${id}`);        
     }
 
+    // Methode pour ajouter un article 
+    public addArticle(postData: Object) {
+        return this.httpClient.post(`${this.url}/posts/`, postData);
+    } 
+
     // Methode pour modifier un article 
     public updateArticle(postData: Object, id:number) {
-        // let endPoints = "/posts/1"
         return this.httpClient.put(`${this.url}/posts/${id}`, postData);
-        // this.httpClient.put(`${this.url}/posts/${id}`, postData).subscribe(data => {
-        //   console.log(data);
-        // });
-    }    
+    } 
+    
+    // Methode pour supprimer 
+    public deleteArticle(id:number) {
+       return this.httpClient.delete(`${this.url}/posts/${id}`);
+    }
 
 }

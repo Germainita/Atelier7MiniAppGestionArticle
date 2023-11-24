@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/accueil">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/accueil">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/gestionArticle/{{userConnect.id}}">Articles</a>
+        </li>
+      </ul>
+      <div class="d-flex">
+        <a routerLink="/archive/{{userConnect.id}}" class="btn btn-item me-3"><i class="bi bi-archive-fill"></i></a>
+        <a routerLink="/corbeille/{{userConnect.id}}" class="btn btn-item btn-item-active me-3"><i class="bi bi-trash3-fill"></i></a>
+        <button class="btn btn-profil me-3" data-bs-toggle="modal" data-bs-target="#modalDetailUser">
+          <img src="data:image/jpeg;base64,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" alt="" class="profil">
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <div class="d-flex justify-content-between mb-5">
+    <div class="col-md-6">
+      <h3>Liste des articles supprimés</h3>
+    </div>
+    <div class="col-md-6">
+      <div class="input-group">
+        <input type="text" name="search" class="form-control">
+        <button class="searchclasse input-group-text"><i class="bi bi-search"></i></button>
+      </div>
+    </div>  
+  </div>
+    <!-- <h1 class="text-center mt-4">Liste des articles supprimés de {{userConnect.name}}</h1> -->
+    <div class="container-list py-4">
+      <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let article of articlesUserSupprimes.reverse()">
+          <div class="card shadow"*ngIf="article.title">
+            <div class="card-body">
+              <img src="https://img.freepik.com/free-photo/interior-decoration-inspired-by-mexican-folklore_23-2150711321.jpg?size=626&ext=jpg&ga=GA1.1.59389668.1692912989&semt=ais" class="img-fluid rounded mb-3" alt="...">
+              <h5 class="card-title text-center">Titre: {{article.title}}</h5>
+              <p class="card-text">Description: {{article.body}}</p>
+              <div class="text-center">
+                  <button  class="btn btn-valider me-3" (click)="restaurer(article)">Restaure</button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    
+    </div>
+</div>
+
+
+<!-- Modal détail de la personne connecté-->
+<div class="modal fade" id="modalDetailUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="text-end">
+          <button type="button" class="btn-close align-end" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="card-body text-center">
+                <div class="profil-image text-center">
+                  <img src="data:image/jpeg;base64,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" alt="">
+                </div>
+                <div class="profil-body ">
+                  <h5 class="card-title">{{userConnect.name}}</h5>
+                  <h5 class="card-title">{{userConnect.surname}}</h5>
+                  <p class="card-text"><i class="bi bi-envelope-at-fill"></i> {{userConnect.email}}</p>
+                  <p class="card-text"><i class="bi bi-telephone-fill"></i> {{userConnect.phone}}</p>
+                  <p class="card-text"><i class="bi bi-wordpress"></i> {{userConnect.website}}</p>
+                  <a routerLink="/accueil" class="btn btn-deconnexion me-3" data-bs-dismiss="modal" aria-label="Close">Deconnexion</a>
+                </div>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+</div>
