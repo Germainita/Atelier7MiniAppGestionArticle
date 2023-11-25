@@ -19,6 +19,13 @@ export class AccueilComponent implements OnInit {
   tabCommentaires: any;
   tabUtilisateurs: any;
 
+  inputSerach: string = "";
+  articlesFilter: any;
+
+  // Attribut pour la pagination
+  articlesParPage = 10; // Nombre d'articles par page
+  pageActuelle = 1; // Page actuelle
+
   // Déclaration des méthodes
   // Constructeur 
   // Injection de dépendance du service article 
@@ -36,7 +43,7 @@ export class AccueilComponent implements OnInit {
     });
     // On récupère les articles à partir du localstorage 
     this.articles = JSON.parse(localStorage.getItem("articles") || "[]");
-    // console.log(this.articles);
+    this.articlesFilter = this.articles;
 
     // On récupere les utilisateurs;
     this.utilisateurService.getUtilisateur().subscribe(utilisateur =>{
@@ -59,5 +66,36 @@ export class AccueilComponent implements OnInit {
       } 
     })
   }
+
+  // On recherche un article par rapport au titre ou à la description 
+  onSearch(){
+  // Recherche se fait selon le nom ou le prenom
+  this.articlesFilter = this.articles.filter(
+    (elt:any) => (elt?.title.toLowerCase().includes(this.inputSerach.toLowerCase()))
+  );
+  // this.filteredApprenants = this.tabApprenants.filter(
+  //   (elt:any) => (elt?.nom.toLowerCase().includes(this.filterValue.toLowerCase()))
+  // );
   
+  }
+
+  // Pagination 
+  // Méthode pour déterminer les articles à afficher sur la page actuelle
+  getArticlesPage(): any[] {
+    const indexDebut = (this.pageActuelle - 1) * this.articlesParPage;
+    const indexFin = indexDebut + this.articlesParPage;
+    return this.articlesFilter.slice(indexDebut, indexFin);
+  }
+
+  // Méthode pour générer la liste des pages
+  get pages(): number[] {
+    const totalPages = Math.ceil(this.articlesFilter.length / this.articlesParPage);
+    return Array(totalPages).fill(0).map((_, index) => index + 1);
+  }
+
+
+  // Méthode pour obtenir le nombre total de pages
+  get totalPages(): number {
+    return Math.ceil(this.articlesFilter.length / this.articlesParPage);
+  }
 }

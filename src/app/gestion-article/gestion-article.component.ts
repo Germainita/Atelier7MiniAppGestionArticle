@@ -44,6 +44,14 @@ export class GestionArticleComponent implements OnInit {
 
   chooseDetail: boolean = true;
 
+  // Pour la recherche de l'article 
+  inputSerach: string = "";
+  articlesUserFilter: any;
+
+  // Attribut pour la pagination
+  articlesParPage = 5; // Nombre d'articles par page
+  pageActuelle = 1; // Page actuelle
+
   // Définition du constructeur 
   constructor (private route: ActivatedRoute, private articleService: ServiceArticle){}
   // Attribut qui permet de récupérer l'identifiant de celui qui s'est connecté 
@@ -82,8 +90,17 @@ export class GestionArticleComponent implements OnInit {
   articlesUserFunction(){
     // On récupère les article de l'utisateur connecté
     this.tabArticlesUser = this.tabArticles.filter((element?:any)=>element?.userId == this.idUserConnect);
-    // console.log(this.tabArticlesUser);
+    this.articlesUserFilter = this.tabArticlesUser;
   }
+
+  // Recherche des articles supprimés de l'utilisateur 
+  onSearch(){
+    // Recherche se fait selon le nom ou le prenom
+    this.articlesUserFilter = this.tabArticlesUser.filter(
+      (elt:any) => (elt?.title.toLowerCase().includes(this.inputSerach.toLowerCase()))
+    );
+  }
+
   // Méthode pour afficher un sweetalert2 apres vérification
   messageAlert(title:any, text:any, icon:any) {
     Swal.fire({
@@ -145,6 +162,8 @@ export class GestionArticleComponent implements OnInit {
     }
     
   }
+
+
   // Methode pour modifier un article 
   // Charger les informations de l'article 
   // On récupère l'article cliqué avec la méthode getArticleById de notre service 
@@ -155,6 +174,7 @@ export class GestionArticleComponent implements OnInit {
     this.objectArticle.title = article.title;
     this.objectArticle.body = article.body;
   }
+  
   // Methode pour modifier l'article en question 
   modfier(){
     // Mis à jour d'un article
@@ -329,6 +349,26 @@ export class GestionArticleComponent implements OnInit {
       })
 
     }
+  }
+
+
+  // Pagination 
+  // Méthode pour déterminer les articles à afficher sur la page actuelle
+  getArticlesPage(): any[] {
+    const indexDebut = (this.pageActuelle - 1) * this.articlesParPage;
+    const indexFin = indexDebut + this.articlesParPage;
+    return this.articlesUserFilter.slice(indexDebut, indexFin);
+  }
+
+  // Méthode pour générer la liste des pages
+  get pages(): number[] {
+    const totalPages = Math.ceil(this.articlesUserFilter.length / this.articlesParPage);
+    return Array(totalPages).fill(0).map((_, index) => index + 1);
+  }
+  
+  // Méthode pour obtenir le nombre total de pages
+  get totalPages(): number {
+    return Math.ceil(this.articlesUserFilter.length / this.articlesParPage);
   }
   
 }

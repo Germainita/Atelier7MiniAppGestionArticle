@@ -19,6 +19,14 @@ export class CorbeilleComponent {
   // Tableau des articles supprimés
   tabArticlesSupprimes:any[] = [];
 
+  // Pour la recherche de l'article 
+  inputSerach: string = "";
+  articlesSupFilter: any;
+
+  // Attribut pour la pagination
+  articlesParPage = 5; // Nombre d'articles par page
+  pageActuelle = 1; // Page actuelle
+
   // Définition du constructeur 
   constructor (private route: ActivatedRoute){}
   // Attribut qui permet de récupérer l'identifiant de celui qui s'est connecté 
@@ -47,7 +55,8 @@ export class CorbeilleComponent {
   articlesSupprimeFunction(){
     // On récupère les article de l'utisateur connecté
     this.articlesUserSupprimes = this.tabArticlesSupprimes.filter((element?:any)=>element?.userId == this.idUserConnect);
-    console.log(this.articlesUserSupprimes);
+    // console.log(this.articlesUserSupprimes);
+    this.articlesSupFilter = this.articlesUserSupprimes;
   }
 
   // Restaurer un article 
@@ -91,4 +100,30 @@ export class CorbeilleComponent {
     }
   }
   
+  // Recherche des articles supprimés de l'utilisateur 
+  onSearch(){
+    // Recherche se fait selon le nom ou le prenom
+    this.articlesSupFilter = this.articlesUserSupprimes.filter(
+      (elt:any) => (elt?.title.toLowerCase().includes(this.inputSerach.toLowerCase()))
+    );
+  }
+
+  // Pagination 
+  // Méthode pour déterminer les articles à afficher sur la page actuelle
+  getArticlesPage(): any[] {
+    const indexDebut = (this.pageActuelle - 1) * this.articlesParPage;
+    const indexFin = indexDebut + this.articlesParPage;
+    return this.articlesSupFilter.slice(indexDebut, indexFin);
+  }
+
+  // Méthode pour générer la liste des pages
+  get pages(): number[] {
+    const totalPages = Math.ceil(this.articlesSupFilter.length / this.articlesParPage);
+    return Array(totalPages).fill(0).map((_, index) => index + 1);
+  }
+  
+  // Méthode pour obtenir le nombre total de pages
+  get totalPages(): number {
+    return Math.ceil(this.articlesSupFilter.length / this.articlesParPage);
+  }
 }

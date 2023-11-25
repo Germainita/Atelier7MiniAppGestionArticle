@@ -26,7 +26,14 @@ export class ArchiveComponent implements OnInit {
 
   // Déclaration d'un objet article 
   objectArticle = new Article;
+
+  // Pour la recherche de l'article 
+  inputSerach: string = "";
+  articlesArchFilter: any;
   
+  // Attribut pour la pagination
+  articlesParPage = 5; // Nombre d'articles par page
+  pageActuelle = 1; // Page actuelle
 
   // Définition du constructeur 
   constructor (private route: ActivatedRoute){}
@@ -54,7 +61,15 @@ export class ArchiveComponent implements OnInit {
   articlesUserArchiveFunction(){
     // On récupère les article de l'utisateur connecté
     this.articlesUserArchives = this.tabArticlesArchives.filter((element?:any)=>element?.userId == this.idUserConnect);
-    console.log(this.articlesUserArchives);
+    this.articlesArchFilter = this.articlesUserArchives;
+  }
+
+  // Recherche des articles supprimés de l'utilisateur 
+  onSearch(){
+    // Recherche se fait selon le nom ou le prenom
+    this.articlesArchFilter = this.articlesUserArchives.filter(
+      (elt:any) => (elt?.title.toLowerCase().includes(this.inputSerach.toLowerCase()))
+    );
   }
 
   // Désarchiver un article 
@@ -143,4 +158,24 @@ export class ArchiveComponent implements OnInit {
     }
   }
   
+
+  // Pagination 
+  // Méthode pour déterminer les articles à afficher sur la page actuelle
+  getArticlesPage(): any[] {
+    const indexDebut = (this.pageActuelle - 1) * this.articlesParPage;
+    const indexFin = indexDebut + this.articlesParPage;
+    return this.articlesArchFilter.slice(indexDebut, indexFin);
+  }
+
+  // Méthode pour générer la liste des pages
+  get pages(): number[] {
+    const totalPages = Math.ceil(this.articlesArchFilter.length / this.articlesParPage);
+    return Array(totalPages).fill(0).map((_, index) => index + 1);
+  }
+
+  
+  // Méthode pour obtenir le nombre total de pages
+  get totalPages(): number {
+    return Math.ceil(this.articlesArchFilter.length / this.articlesParPage);
+  }
 }

@@ -11,6 +11,10 @@
     background-color: #f6F6F6;
 }
 
+.logo{
+    height: 8vh;
+}
+
 .nav-link{
     color: #596235 !important;
     font-weight: bold;
@@ -140,4 +144,16 @@
 .btn-desarchiver:hover{
     color: white;
     background-color: #596235;
+}
+
+/* pagination  */
+.pageActuelle{
+    color: #D96845;
+    font-weight: bold;
+    border-bottom: 1px solid #596235;
+}
+
+.btnColor{
+    background-color: #596235;
+    color: #D96845;
 }

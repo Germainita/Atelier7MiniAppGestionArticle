@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/accueil">Navbar</a>
+    <a class="navbar-brand" routerLink="/accueil"><img src="assets/gestionArticleLogo.png" alt="" class="logo"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,40 +25,44 @@
 </nav>
 
 <div class="container">
+  <!-- Liste des articles  -->
   <div class="container-articles-user" *ngIf="chooseDetail">
     <button  class="btn btn-ajout-article my-5" data-bs-toggle="modal" data-bs-target="#modalAjouterArticle">Ajouter un article</button>
+    <!-- Zone de recherche  -->
     <div class="d-flex justify-content-between mb-5">
       <div class="col-md-6">
         <h3>Liste des articles</h3>
       </div>
       <div class="col-md-6">
         <div class="input-group">
-          <input type="text" name="search" class="form-control">
+          <input type="text" name="search" class="form-control" [(ngModel)]="inputSerach" (input)="onSearch()">
           <button class="searchclasse input-group-text"><i class="bi bi-search"></i></button>
         </div>
       </div>  
     </div>
+
+    <!-- Liste des articles de l'utilisateur connecté  -->
     <!-- <h1 class="text-center mt-4">Liste des articles de {{userConnect.name}}</h1> -->
     <div class="container-list py-2">
       <div class="row">
-        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let article of tabArticlesUser.reverse()">
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let article of getArticlesPage().reverse()">
           <div class="card shadow ">
             <div class="card-body">
               <img src="https://img.freepik.com/free-photo/interior-decoration-inspired-by-mexican-folklore_23-2150711321.jpg?size=626&ext=jpg&ga=GA1.1.59389668.1692912989&semt=ais" class="img-fluid rounded mb-3" alt="...">
               <h5 class="card-title text-center">Titre: {{article.title}}</h5>
               <p class="card-text">Description: {{article.body}}</p>
-              <div class="row ps-5">
+              <div class="row px-5">
                 <div class="col-6 mb-3">
-                  <button  class="btn btn-action btn-action-active me-3" data-bs-toggle="modal" data-bs-target="#modalModifierArticle" (click)="chargerInfosArticle(article)">Modifier</button>
+                  <button  class="btn btn-action btn-action-active" data-bs-toggle="modal" data-bs-target="#modalModifierArticle" (click)="chargerInfosArticle(article)">Modifier</button>
                 </div>
                 <div class="col-6 mb-3">
-                  <button  class="btn btn-action btn-action-notactive me-3" (click)="details(article); showDetail()">Details</button>
+                  <button  class="btn btn-action btn-action-notactive" (click)="details(article); showDetail()">Details</button>
                 </div>
                 <div class="col-6 mb-3">
-                  <button  class="btn btn-action btn-action-notactive me-3" (click)="archiver(article)">Archiver</button>
+                  <button  class="btn btn-action btn-action-notactive" (click)="archiver(article)">Archiver</button>
                 </div>
                 <div class="col-6 mb-3">
-                  <button  class="btn btn-action btn-action-active me-3" (click)="supprimer(article)">Supprimer</button>
+                  <button  class="btn btn-action btn-action-active" (click)="supprimer(article)">Supprimer</button>
                 </div>
                 
               </div>
@@ -69,8 +73,26 @@
       </div>
     
     </div>
+
+    <!-- Pagination  -->
+    <div *ngIf="getArticlesPage().length">
+      <div class="d-flex justify-content-center my-5">
+        <button class="btn btnColor  me-2" [disabled]="pageActuelle === 1" (click)="pageActuelle = pageActuelle - 1">
+          <i class="bi bi-chevron-double-left"></i>
+        </button>
+        <button class="btn ms-2" *ngFor="let page of pages" (click)="pageActuelle = page">
+          <span class="pageActuelle" *ngIf="page===pageActuelle">{{page}}</span>
+          <span  *ngIf="page != pageActuelle">{{page}}</span>
+          <!-- {{ page }} -->
+        </button>
+        <button class="btn btnColor ms-2" [disabled]="pageActuelle === totalPages" (click)="pageActuelle = pageActuelle + 1">
+          <i class="bi bi-chevron-double-right"></i>
+        </button>
+      </div>
+    </div>
   </div>
 
+  <!-- Détails d'un article  -->
   <div class="details-article" *ngIf="!chooseDetail">
     <i class="bi bi-arrow-left-circle-fill" (click)="showDetail()"></i>
     <div class="card mb-3">
